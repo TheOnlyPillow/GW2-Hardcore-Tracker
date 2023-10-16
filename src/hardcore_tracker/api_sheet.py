@@ -8,7 +8,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-import data.constants as constants
+import hardcore_tracker.constants as constants
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -44,9 +44,23 @@ def get_all_users():
     return all_users
 
 def map_api_keys(list_of_api_keys):
+    """
+    This function will format the users sheet in the following way
+    so that it becomes a nice readable list in the following format:
+
+    [{username_1: API_Key},{username_2: API_Key}]
+
+    Example:
+
+    [
+        {"ThePillow.1234" : "13223AC4-AB53-E340-A34C-DA7C6C88FEB917F74F15-F330-471F-A3CC-40DEC144F8C3"},
+        {"ThePillow.5678" : "12345678-ABCD-E340-A34C-DA7C6C88FEB917F74F15-F330-471F-A3CC-40DEC144F8C3"}
+    ]
+    """
     all_users = {}
     for row in list_of_api_keys:
         all_users[row[1]] = row[0]
+
     return all_users
 
 

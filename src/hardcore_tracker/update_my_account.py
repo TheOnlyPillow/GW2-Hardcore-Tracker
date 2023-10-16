@@ -1,7 +1,7 @@
-from db.db_client import GW2_Hardcore_Database_Client
-from hardcore_tracker.gw2_user import GW2_User
+from db_client import GW2_Hardcore_Database_Client
+from gw2_user import GW2_User
 
-from data.constants import TEST_API_KEY, TEST_USERNAME
+from constants import TEST_API_KEY, TEST_USERNAME
 
 print("Getting user from gw2 api")
 my_user = GW2_User(**{"api_key": TEST_API_KEY, "username": TEST_USERNAME})

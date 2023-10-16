@@ -3,7 +3,6 @@ import json
 
 class GW2_User:
     
-
     def __init__(self, **user_information):
         """
         Creates a new GW2_User object.
@@ -27,7 +26,12 @@ class GW2_User:
         object's characters variable
         """
         character_endpoint = f"https://api.guildwars2.com/v2/characters/?access_token={self.api_key}"
-        self.characters = requests.get(character_endpoint).json()
+        character_request = requests.get(character_endpoint)
+        if character_request.status_code != 200:
+            print(f"Unable to get characters for user: {self.username}")
+            self.characters = []
+        else: 
+            self.characters = character_request.json()
 
     def get_characters_info(self):
         """
@@ -36,11 +40,12 @@ class GW2_User:
         """
         self.characters_info = {}
         self.hardcore_characters = []
-        for character in self.characters:
-            character_info_endpoint = f"https://api.guildwars2.com/v2/characters/{character}/core?access_token={self.api_key}"
-            character_info = requests.get(character_info_endpoint).json()
-            self.characters_info[character] = character_info
-            self.update_hardcore_character_list(character)
+        if self.characters:
+            for character in self.characters:
+                character_info_endpoint = f"https://api.guildwars2.com/v2/characters/{character}/core?access_token={self.api_key}"
+                character_info = requests.get(character_info_endpoint).json()
+                self.characters_info[character] = character_info
+                self.update_hardcore_character_list(character)
     
     def update_hardcore_character_list(self, character: str) -> None:
         """
