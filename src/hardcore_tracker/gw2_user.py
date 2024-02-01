@@ -47,6 +47,30 @@ class GW2_User:
                 self.characters_info[character] = character_info
                 self.update_hardcore_character_list(character)
     
+    def get_trading_post_history(self):
+        """
+        Gets the trading post history for all of the characters in this user's character list.
+        """
+        self.trading_post_history = {}
+        tp_endpoint = f"https://api.guildwars2.com/v2/commerce/transactions/history/?access_token={self.api_key}"
+        tp_request = requests.get(tp_endpoint)
+        if tp_request.status_code != 200:
+            print(f"Unable to get trading post history for user: {self.username}")
+        else:
+            self.trading_post_history = tp_request.json()
+
+    def get_legendary_armoury(self):
+        """
+        Gets the legendary armoury for this user
+        """
+        self.legendary_armoury = {}
+        la_endpoint = f"https://api.guildwars2.com/v2/account/legendaryarmory/?access_token={self.api_key}"
+        la_request = requests.get(la_endpoint)
+        if la_request.status_code != 200:
+            print(f"Unable to get legendary armoury for user: {self.username}")
+        else:
+            self.legendary_armoury = la_request.json()
+
     def update_hardcore_character_list(self, character: str) -> None:
         """
         Updates the object's hardcore character list by checking the current character's information
@@ -74,4 +98,4 @@ class GW2_User:
         return num_hardcore_characters < len(self.characters)
 
     def toJSON(self) -> dict:
-        return json.dumps(self, default=lambda x: x.__dict__, sort_keys=True, indent=4)
+        return json.dumps(self, default=lambda x: x.__dict__, sort_keys=True, indent=4)        

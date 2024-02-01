@@ -12,8 +12,7 @@ def update_database():
         db_client.add_user(current_user)
 
 def main():
-    char = check_for_character("Sxcept")
-    print(char.username)
+    update_database()
 
 
 def check_individual_user(username: str):
