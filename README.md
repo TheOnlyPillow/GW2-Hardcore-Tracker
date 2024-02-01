@@ -1,5 +1,5 @@
-# Example Package
+# GW2 Hardcore Account Tracking
 
-This is a simple example package. You can use
-[Github-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
-to write your content.
+Simple API app that uses python and the GW2 API to query for users registered in the Team 99% Hardcore competition 
+
+Works with a MongoDB to store user data to compare for changes when making new API calls. 
